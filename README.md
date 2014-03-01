@@ -5,4 +5,7 @@
 Qui un piccolo confronto all'america: http://tanto.github.io/50centimetri/
 
 ##  Note
+### Autore
 Realizzato da [Andrea Borruso](https://twitter.com/aborruso) per [TANTO](http://blog.spaziogis.it/).
+### Strumenti
+[mapbox.js](https://www.mapbox.com/mapbox.js/) e [twitter bootstap](http://getbootstrap.com/)
