@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset=utf-8 />
+	<title>Confronto RealVista1.0 TILE OPEN, AGEA 2009-2012</title>
+
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+	<script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.js'></script>
+	<link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.1/mapbox.css' rel='stylesheet' />
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<script src="http://aborruso.github.io/it4insp/js/jquery.min.js"></script>
+
+	<style>
+	body { margin:0; padding:0; }
+	#map { position:absolute; top:0; bottom:0; width:100%; }
+	#contenitore {width:100%; height: 400px}
+	</style>
+</head>
+<body>
+	<style>
+	#range {
+		width: 100%;
+		position: absolute;
+	}
+	.leaflet-top .leaflet-control-zoom {
+		margin-top: 20px;
+	}
+	</style>
+	
+
+	<div class="container">
+		<div class="row clearfix">
+			<div class="col-md-2 column">
+
+			</div>
+			<div class="col-md-8 column">
+				<div id="contenitore">
+					<div id='map'></div>
+					<input id="range" type="range" min="0" max="1.0" step="any" style="width: 100%; position: absolute" />
+				</div>	
+			</div>
+			<div class="col-md-2 column">
+
+			</div>
+		</div>
+		<div class="row clearfix">
+			<div class="col-md-2 column">
+			</div>
+			<div class="col-md-4 column">
+				<h4>
+					RealVista1.0 WMS OPEN
+				</h4>
+				<p>
+					A sinistra le ortofoto a 50 cm. di <a href="http://www.realvista.it/website/Joomla/index.php?option=com_content&view=article&id=1:realvista1-0-da-oggi-diventa-open-realvista-it&catid=8&Itemid=101" target="_blank">e-GEOS</a> realizzate da nell’arco temporale 2006-2009, rilasciate in due modalit&agrave;: <a href="http://www.realvista.it/website/Joomla/index.php?option=com_content&view=article&id=12:realvista1-0-wms-open&catid=24&Itemid=128" target="_blank">RealVista1.0 WMS OPEN</a>  e <a href="http://www.realvista.it/website/Joomla/index.php?option=com_content&view=article&id=13:realvista1-0-tile-open&catid=24&Itemid=128" target="_blank">RealVista1.0 TILE OPEN</a>. Qui il layer viene servito tramite <i>tile caching</i> ed &egrave; <strong>rapido</strong>.
+				</p>
+				<p>
+					<a class="btn" href="https://gist.github.com/aborruso/9287570" target="_blank">WMS Capabilities »</a>
+				</p>
+			</div>
+			<div class="col-md-4 column">
+				<h4>
+					AGEA 2009-2012
+				</h4>
+				<p>
+					A destra le ortofoto a 50 cm. del <a href="http://www.pcn.minambiente.it/GN/news.php?lan=it&y=2014#news_105" target="_blank">Ministero dell’Ambiente e della Tutela del Territorio e del Mare e l’Agenzia per le Erogazioni in Agricoltura</a>, realizzate da AGEA nell’arco temporale 2009-2012. Il <strong>rendering &egrave; lento</strong> perch&eacute; non c'&egrave; <i>caching</i>.
+				</p>
+				<p>
+					<a class="btn" href="https://gist.github.com/aborruso/9287583" target="_blank">WMS Capabilities »</a>
+				</p>
+			</div>
+			<div class="col-md-2 column">
+			</div>
+		</div>
+		<hr>
+		<p>Realizzato per diletto da <a href="twitter.com/aborruso" target="_blank">Andrea Borruso</a> basandosi su <a href="https://www.mapbox.com/mapbox.js/example/v1.0.0/swipe-layers/" target="_blank">questo</a></p>
+	</div>
+
+
+	<script>
+	var map = L.mapbox.map('map').setView([38, 13], 17);
+
+	var pcn_agea = L.tileLayer.wms("http://wms.pcn.minambiente.it/ogc?map=/ms_ogc/WMS_v1.3/raster/ortofoto_colore_12.map&", {
+		layers: 'OI.ORTOIMMAGINI.2012',
+		format: 'image/jpeg',
+		attribution: "AGEA 2009-2012, Portale Cartografico nazionale"
+	}).addTo(map);
+
+	var overlay = L.tileLayer.wms("http://213.215.135.196/reflector/open/service?", {
+		layers: 'rv1',
+		format: 'image/jpeg',
+		attribution: "RealVista1.0 WMS OPEN di e-GEOS SpA - CC BY SA"
+	}).addTo(map);     
+
+
+	var range = document.getElementById('range');
+
+	function clip() {
+		var nw = map.containerPointToLayerPoint([0, 0]),
+		se = map.containerPointToLayerPoint(map.getSize()),
+		clipX = nw.x + (se.x - nw.x) * range.value;
+
+		overlay.getContainer().style.clip = 'rect(' + [nw.y, clipX, se.y, nw.x].join('px,') + 'px)';
+	}
+
+	range['oninput' in range ? 'oninput' : 'onchange'] = clip;
+	map.on('move', clip);
+
+	map.setView([38.120174, 13.357236], 17);
+
+	</script>
+
+
+</body>
+</html>
