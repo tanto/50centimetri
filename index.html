@@ -20,12 +20,8 @@
 	<script src="http://aborruso.github.io/it4insp/js/jquery.min.js"></script>
 	<script src='http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-hash/v0.2.1/leaflet-hash.js'></script>
 
-	<script src='http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.js'></script>
-	<link href='http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.24.0/L.Control.Locate.css' rel='stylesheet' />
-
-	<!--[if lt IE 9]>
-	<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-locatecontrol/v0.21.0/L.Control.Locate.ie.css' rel='stylesheet' />
-	<![endif]-->
+	<script src='http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-minimap/v1.0.0/Control.MiniMap.js'></script>
+	<link href='http://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-minimap/v1.0.0/Control.MiniMap.css' rel='stylesheet' />
 
 	<style>
 	body { margin:0; padding:0; }
@@ -93,7 +89,7 @@
 
 
 	<script>
-	var map = L.mapbox.map('map').setView([38, 13], 17);
+	var map = L.mapbox.map('map')
 
 	var pcn_agea = L.tileLayer.wms("http://wms.pcn.minambiente.it/ogc?map=/ms_ogc/WMS_v1.3/raster/ortofoto_colore_12.map&", {
 		layers: 'OI.ORTOIMMAGINI.2012',
@@ -122,10 +118,11 @@
 	map.on('move', clip);
 
 	map.setView([38.120174, 13.357236], 17);
+
+	var minimappa = new L.Control.MiniMap(L.mapbox.tileLayer('examples.map-9ijuk24y'),{zoomLevelOffset:-7,toggleDisplay:true}).addTo(map);
 	
 	var hash = L.hash(map);
 
-	L.control.locate().addTo(map);
 
 	</script>
 
