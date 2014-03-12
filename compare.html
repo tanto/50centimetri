@@ -17,7 +17,8 @@
     <div id="map1"></div>
     <div id="map2"></div>
     <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet-src.js"></script>
-    <script src="L.Map.Sync.js"></script>
+    <script src="./plugins/L.Map.Sync.js"></script>
+    <script src="./plugins/leaflet-hash.js"></script>
 
     <script type="text/javascript">
 
@@ -43,7 +44,7 @@
         zoom: 15
     });
 
-    
+
 
     var map2 = L.map('map2', {
         layers: [agea],
@@ -53,6 +54,8 @@
 
     map1.sync(map2);
     map2.sync(map1);
+
+    var hash = new L.Hash(map1);
 
     </script>
 </body>
