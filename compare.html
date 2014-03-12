@@ -51,6 +51,11 @@
         center: center,
         zoom: 17
     });
+    
+    var marker = L.marker([0, 0]).addTo(map1);
+map1.on('move', function () {
+    marker.setLatLng(map1.getCenter());
+});
 
     map1.sync(map2);
     map2.sync(map1);
