@@ -23,13 +23,13 @@
 
     var center = [38.120174, 13.357236];
 
-    var layer2 = L.tileLayer.wms("http://wms.pcn.minambiente.it/ogc?map=/ms_ogc/WMS_v1.3/raster/ortofoto_colore_12.map&", {
+    var agea = L.tileLayer.wms("http://wms.pcn.minambiente.it/ogc?map=/ms_ogc/WMS_v1.3/raster/ortofoto_colore_12.map&", {
         layers: 'OI.ORTOIMMAGINI.2012',
         format: 'image/jpeg',
         attribution: "AGEA 2009-2012, Portale Cartografico nazionale"
     });
 
-    var overlay = L.tileLayer.wms("http://213.215.135.196/reflector/open/service?", {
+    var realvista = L.tileLayer.wms("http://213.215.135.196/reflector/open/service?", {
         layers: 'rv1',
         format: 'image/jpeg',
         attribution: "RealVista1.0 WMS OPEN di e-GEOS SpA - CC BY SA"
@@ -38,22 +38,22 @@
 
 
     var map1 = L.map('map1', {
-        layers: [layer1],
+        layers: [realvista],
         center: center,
         zoom: 15
     });
 
-        
+    
 
-        var map2 = L.map('map2', {
-            layers: [layer2],
-            center: center,
-            zoom: 17
-        });
+    var map2 = L.map('map2', {
+        layers: [agea],
+        center: center,
+        zoom: 17
+    });
 
-        map1.sync(map2);
-        map2.sync(map1);
+    map1.sync(map2);
+    map2.sync(map1);
 
-        </script>
-    </body>
-    </html>
+    </script>
+</body>
+</html>
