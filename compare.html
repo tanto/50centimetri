@@ -52,9 +52,14 @@
         zoom: 17
     });
     
-    var marker = L.marker([0, 0]).addTo(map1);
+    var marker1 = L.marker([0, 0]).addTo(map1);
 map1.on('move', function () {
     marker.setLatLng(map1.getCenter());
+});
+
+var marker2 = L.marker([0, 0]).addTo(map2);
+map2.on('move', function () {
+    marker.setLatLng(map2.getCenter());
 });
 
     map1.sync(map2);
